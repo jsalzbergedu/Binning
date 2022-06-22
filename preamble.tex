@@ -1,0 +1,414 @@
+% This is stuff that is required for the document to compile. It is not
+% related to formatting. 
+%\usepackage[pdftex]{graphicx}
+% xcolor clashes with osdi20 template
+%\usepackage[dvipsnames]{xcolor} % for Blue; also, must before tikz, pstricks
+\usepackage{booktabs}  % for tables
+\usepackage{dcolumn}   % for tables
+%\usepackage{hhline}   % for tables
+\usepackage{multirow}  % for tables
+\usepackage{rotating}
+\usepackage{xspace}
+\usepackage{inconsolata} % nicer monospace font
+\usepackage{hyphenat}  % supplies \hyp{}, which tells tex that it can 
+		       % hyphenate at an existing hyphen
+%\usepackage[table,usenames,dvipsnames]{xcolor}
+\usepackage{enumerate}
+\usepackage{mfirstuc} % captialize first letter
+\usepackage{tikz} % two-way onarrow
+\usepackage{xparse} % two-way onarrow
+% for epoch transaction
+\usepackage{listings}
+\definecolor{dkgreen}{rgb}{0,.6,0}
+\definecolor{dkblue}{rgb}{0,0,.6}
+\definecolor{dkyellow}{cmyk}{0,0,.8,.3}
+\definecolor{frenchplum}{RGB}{129,20,83}
+\lstset{
+  language        = c,
+  basicstyle      = \small\ttfamily,
+  keywordstyle    = \bfseries\color{dkblue},
+  stringstyle     = \color{red},
+  morekeywords    = {assert, havoc, assume},
+  commentstyle    = \color{dkgreen},
+  escapeinside={@}{@},
+  numberstyle=\tiny,
+  numbers=left,
+  numbersep=3pt,
+  xleftmargin=1.1em,
+  mathescape=true,  
+  columns=flexible,
+  classoffset=1, % starting new class
+  morekeywords={invariant},
+  keywordstyle=\bfseries\color{frenchplum},
+  classoffset=0,
+}
+
+% defining Viper-like language for lstlisting
+\lstdefinelanguage{Viper}{
+  morekeywords={acc, method, struct,if,else,returns,procedure,requires,ensures,:=,var,
+    new,old,free,implicit,modifies,call,locals,assume,assert,choose,havoc,ghost,
+    predicate,function,invariant,while, return,atomic, split, type, field, result,
+    mark, unmark, define, datatype, domain, axiom, forall, Int, Set},
+  deletekeywords={union,int},
+  % lineskip=-0.1em,
+  numbers=left,
+  xleftmargin=2em,
+  escapeinside={@}{@},
+  % numbers=none,
+  % stepnumber=2,
+  % firstnumber=1,
+  % numberfirstline=true,
+  numberstyle=\tiny,
+  basicstyle=\footnotesize\ttfamily,
+  columns=flexible,
+  morecomment=*[s][\color{green!60!black}]{/*}{*/},
+  morecomment=*[l][\color{green!60!black}]{//},
+  moredelim=**[is][\color{purple}]{|<}{>|},
+  mathescape=true,
+}
+
+
+\newcommand{\code}[1]{\textnormal{\texttt{#1}}}
+
+% hyperref clashes with osdi20 template
+% \usepackage[breaklinks=true,
+%             pdfdisplaydoctitle=true,
+%             %pagebackref, % we don't need this for a paper
+%             bookmarksnumbered=true,
+%             colorlinks = true,
+%             citecolor = black, % change this if you want to highlight citations, maybe Blue
+%             anchorcolor = black,
+%             urlcolor = Blue, % apparently, Blue != blue
+%             linkcolor = Blue,
+%             pdfborder={0 0 0},
+%             pdfpagelabels,
+%             pdfpagelayout=SinglePage,
+%             hyperfootnotes=false
+%             ]{hyperref}
+
+\usepackage[square,comma,numbers,sort&compress]{natbib}
+
+%\usepackage{ulem}      % for strikethrough and underlining
+%\mw{above package turns italics to underlines.}
+
+\usepackage{textcomp}
+%\usepackage{lastpage}
+\usepackage{tabularx}
+\usepackage{pifont}
+%\usepackage{natbib}
+\usepackage{url}
+\def\UrlBreaks{\do\/\do-}
+\usepackage{breakurl}
+
+\usepackage{wrapfig}
+
+\usepackage{ulem}
+\normalem
+
+% for cap the first letter for a cmd
+\usepackage{mfirstuc}
+
+% for getting table 1 in hotnets09 submission to work
+\usepackage{colortbl} % colorful columns and rows
+\usepackage{array}    % needed for 'b' argument in tabular preamble
+
+\usepackage{dblfloatfix}
+
+\usepackage[font=small]{caption}
+\usepackage{subcaption}
+
+%\usepackage{algorithm}
+%\usepackage{algorithmic}
+%\floatname{algorithm}{Pseudocode}
+\usepackage[noend]{algpseudocode}
+\algrenewcomment[1]{\hfill// #1}%
+\algrenewcommand\algorithmicindent{1.25em}
+
+\definecolor{darkgreen}{rgb}{0,0.75,0}
+
+% Hack algpseudocode to be more Python-like
+\algrenewcommand\algorithmicdo{:}
+\algrenewcommand\algorithmicwhile{\textbf{while}}
+\algrenewcommand\algorithmicfor{\textbf{for}}
+\algrenewcommand\algorithmicforall{\textbf{for all}}
+\algrenewcommand\algorithmicloop{\textbf{loop}}
+\algrenewcommand\algorithmicrepeat{\textbf{repeat}}
+\algrenewcommand\algorithmicuntil{\textbf{until}}
+\algrenewcommand\algorithmicprocedure{\textbf{procedure}}
+\algrenewcommand\algorithmicfunction{\textbf{function}}
+\algrenewcommand\algorithmicif{\textbf{if}}
+\algrenewcommand\algorithmicthen{:}
+\algrenewcommand\algorithmicelse{\textbf{else}}
+\algrenewcommand\algorithmicrequire{\textbf{Require}:}
+\algrenewcommand\algorithmicensure{\textbf{Ensure}:}
+\algrenewcommand\algorithmicreturn{\textbf{return}}
+\algdef{SE}[WHILE]{While}{EndWhile}[1]{\algorithmicwhile\ #1\algorithmicdo}{\algorithmicend\ \algorithmicwhile}%
+\algdef{SE}[FOR]{For}{EndFor}[1]{\algorithmicfor\ #1\algorithmicdo}{\algorithmicend\ \algorithmicfor}%
+\algdef{S}[FOR]{ForAll}[1]{\algorithmicforall\ #1\algorithmicdo}%
+\algdef{SE}[IF]{If}{EndIf}[1]{\algorithmicif\ #1\algorithmicthen}{\algorithmicend\ \algorithmicif}%
+\algdef{C}[IF]{IF}{ElsIf}[1]{\algorithmicelse\ \algorithmicif\ #1\algorithmicthen}%
+\algnotext{Function}                
+\algnotext{EndFunction}
+\algnotext{EndFor}
+\algnotext{EndIf}
+\algnotext{EndWhile}
+\algnewcommand\Or{\textbf{or}\xspace}
+\algnewcommand\myAnd{\textbf{and}\xspace}
+
+\usepackage{amsmath,amscd}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{cleveref} % for clever references
+
+\usepackage[noeka]{mathrmletter}
+\usepackage{tgtermes}
+%\renewcommand{\ttdefault}{cmtt}
+
+% peanut gallery comments
+% NOTE: Comment out the line below if you want a draft with no red comments.
+% NOTE: Commenting out this line may replace some of the red comments with 
+%       extra spaces or newlines.
+%\def\noeditingmarks{}
+
+\newcommand{\zdag}{{$^{\dagger}$}\xspace}
+\newcommand{\zddag}{{$^{\ddagger}$}\xspace}
+\newcommand{\zstar}{{$^{\star}$}\xspace}
+
+\newcommand{\CF}[1]{\xmakefirstuc{#1}}
+
+\newcommand{\sys}{Taster\xspace}
+\newcommand{\Sys}{\CF{\sys}\xspace}
+\newcommand{\merge}{\ensuremath{\code{merge}}\xspace}
+
+\newcommand{\circledone}{\ding{192}\xspace}
+\newcommand{\circledtwo}{\ding{193}\xspace}
+\newcommand{\circledthree}{\ding{194}\xspace}
+\newcommand{\circledfour}{\ding{195}\xspace}
+\newcommand{\circledfive}{\ding{196}\xspace}
+\newcommand{\filledone}{\ding{202}\xspace}
+\newcommand{\filledtwo}{\ding{203}\xspace}
+\newcommand{\filledthree}{\ding{204}\xspace}
+\newcommand{\filledfour}{\ding{205}\xspace}
+\newcommand{\filledfive}{\ding{206}\xspace}
+
+\newcommand{\fillin}{\textred{fill in...}\xspace}
+
+% MW: our "house style" is not to italicize "et al". (we also don't
+% italicize "i.e." and "e.g.".) rationale: why draw attention to it?
+% italics mean "from a foreign language", but is it necessary to
+% emphasize the Latin-ness of "et al."?
+\newcommand{\etal}{et al.\xspace}
+
+\newcommand{\cpu}{\textsc{cpu}\xspace}
+
+\makeatletter
+\def\imod#1{\allowbreak\mkern10mu({\operator@font mod}\,\,#1)}
+\makeatother
+
+\makeatletter
+\setlength{\@fptop}{0pt}
+\makeatother
+
+\newenvironment{theabstract}{\subsection*{Abstract}}{}
+
+%\renewcommand{\vec}[1]{\mathbf{#1}}
+
+%\def\compactify{\leftmargin=\parindent \itemsep=0.01pt \topsep=0.01pt \partopsep=0pt \parsep=0.01pt}
+\def\compactify{\itemsep=0in \topsep=2pt \parsep=0.00in \partopsep=0pt
+\leftmargin=2em}
+\let\latexusecounter=\usecounter
+\newenvironment{CompactItemize}
+  {\def\usecounter{\compactify\latexusecounter}
+   \begin{itemize}\addtolength{\itemsep}{-0.075in}}
+  {\end{itemize}\let\usecounter=\latexusecounter}
+\newenvironment{CompactEnumerate}
+  {\def\usecounter{\compactify\latexusecounter}
+   \begin{enumerate}}
+  {\end{enumerate}\let\usecounter=\latexusecounter}
+
+\newenvironment{myitemize}%
+  {\begin{list}{\labelitemi}{\itemsep3pt \topsep3pt \parsep0.00in
+  \partopsep=3pt \leftmargin1em}}%
+  {\end{list}}
+\newenvironment{myitemize2}%
+  {\begin{list}{\labelitemi}{\itemsep1pt \topsep2pt \parsep0.00in
+  \partopsep=0pt \leftmargin1.2em}}%
+  {\end{list}}
+\newenvironment{myitemize4}%
+  {\begin{list}{\labelitemi}{\itemsep2pt \topsep2pt \parsep0.00in
+  \partopsep=0pt \leftmargin1.2em}}%
+  {\end{list}}
+\newenvironment{myitemize5}%
+  {\begin{list}{\labelitemi}{\itemsep3pt \topsep3pt \parsep0.00in
+  \partopsep=3pt \leftmargin1.5em}}%
+  {\end{list}}
+\newenvironment{myitemize6}%
+  {\begin{list}{\S3.3}{\itemsep3pt \topsep3pt \parsep0.00in
+  \partopsep=3pt\leftmargin1em}}%
+  {\end{list}}
+
+
+%\newenvironment{myitemize}%
+%  {\begin{list}{\labelitemi}{\itemsep4pt \topsep10pt \parsep0.00in
+%  \partopsep=0pt}}%
+%  {\end{list}}
+\newenvironment{myenumerate}
+  {\def\usecounter{\compactify\latexusecounter}
+   \begin{enumerate}}
+  {\end{enumerate}\let\usecounter=\latexusecounter}
+
+\def\compactsortof{\itemsep=0in \topsep=2pt \parsep=0.00in \partopsep=0pt
+\leftmargin=1.2em}
+\newenvironment{myenumerate2}
+  {\def\usecounter{\compactsortof\latexusecounter}
+   \begin{enumerate}}
+  {\end{enumerate}\let\usecounter=\latexusecounter}
+
+%\def\compactsortof{\itemsep=3pt \topsep3pt \parsep=0ex \partopsep=0pt
+%\leftmargin=1.55em}
+\newenvironment{myenumerate3}
+  {\def\usecounter{\compactsortof\latexusecounter}
+   \begin{enumerate}}
+  {\end{enumerate}\let\usecounter=\latexusecounter}
+
+\def\compactsqueeze{\itemsep=0pt \topsep0pt \parsep=0ex \partopsep=0pt
+\leftmargin=1.63em}
+\newenvironment{myenumerate4}
+  {\def\usecounter{\compactsqueeze\latexusecounter}
+   \begin{enumerate}}
+  {\end{enumerate}\let\usecounter=\latexusecounter}
+
+%\ifextended
+%\def\compactRenum{\itemsep=1ex \topsep=1ex \parsep=0.00in \partopsep=0pt
+%\leftmargin=2.05em}
+%\else
+\def\compactRenum{\itemsep=0in \topsep=2pt \parsep=0.00in \partopsep=0pt
+\leftmargin=2.05em}
+%\fi
+\newenvironment{myRenumerate}
+    {\def\usecounter{\compactRenum\latexusecounter}\begin{enumerate}}
+    {\end{enumerate}\let\usecounter=\latexusecounter}
+
+\newcounter{saveenumi}
+
+\newcommand{\astskip}{\smallskip\noindent\parbox{\linewidth}
+			{\center*\hspace{2.5em}*\hspace{2.5em}*\medskip\smallskip}}
+
+% uncomment to use regular paragraphs
+%\def\normalpar{}
+
+\ifx\normalpar\undefined
+  \newcommand{\mypar}[1]{\textbf{#1}}
+\else
+  \newcommand{\mypar}[1]{\paragraph{#1}}
+\fi
+
+\def\discretionaryslash{\discretionary{/}{}{/}}
+{\catcode`\/\active
+\gdef\URLprepare{\catcode`\/\active\let/\discretionaryslash
+        \def~{\char`\~}}}%
+\def\URL{\bgroup\URLprepare\realURL}%
+\def\realURL#1{\tt #1\egroup}%
+
+\newcommand{\ttbox}[1]{\mbox{\texttt{#1}}\xspace}
+
+\hyphenation{ra-tionale pseudo-constraint Face-dancer}
+
+
+% circled numbers
+\newcommand{\circled}[1]{\textcircled{{#1}}}
+\newcommand{\term}[1]{{{#1}}}
+
+\newcommand{\onarrow}[1]{\xrightarrow[]{\text{#1}}}
+
+% common math short-hands
+
+\newcommand{\m}[1]{\mathsf{#1}}
+\newcommand{\tuple}[1]{\left\langle {#1} \right\rangle}
+\newcommand{\setcomp}[2]{\ensuremath{\left\{#1\;\middle|\;#2\right\}}}
+\newcommand{\stacklabel}[1]{\stackrel{\smash{\scriptscriptstyle \mathrm{#1}}}}
+\newcommand{\Def}{\stacklabel{\mathrm{def}}}
+
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+
+% macros related to examples
+\newcommand{\LOAD}{\code{LOAD}}
+\newcommand{\STORE}{\code{STORE}}
+\newcommand{\IF}{\code{if}}
+
+\newcommand{\lengthof}[1]{{#1.\code{len}}}
+\newcommand{\mergeprog}{\code{merge}}
+% FIND_MIN
+\newcommand{\fmcount}{\ensuremath{\code{count}}\xspace}
+\newcommand{\mina}{\ensuremath{\code{min}}\xspace}
+% KMP
+\newcommand{\txt}{\ensuremath{\code{text}}\xspace}
+\newcommand{\pat}{\ensuremath{\code{pat}}\xspace}
+\newcommand{\lps}{\ensuremath{\code{lps}}\xspace}
+% 2D_CONVEX_HULL
+\newcommand{\chstack}{\ensuremath{\code{stack}}\xspace}
+\newcommand{\getx}[1]{{#1.\code{x}}}
+\newcommand{\gety}[1]{{#1.\code{y}}}
+\newcommand{\chinc}{\ensuremath{\code{in\_c}}\xspace}\newcommand{\chlast}{\ensuremath{\code{last}}\xspace}
+\newcommand{\chnext}{\ensuremath{\code{next}}\xspace}
+
+% macros for framework
+
+
+\newcommand{\seq}[1]{\langle #1 \rangle}
+\newcommand{\ts}{T}
+\newcommand{\impl}{{I}}
+\newcommand{\spec}{{S}}
+\newcommand{\better}{B}
+\newcommand{\refines}{\leq}
+\newcommand{\tsspec}{\ts_\spec}
+\newcommand{\tsimpl}{\ts_\impl}
+\newcommand{\tsimplaux}{\ts_{\impl\better}}
+\newcommand{\tsimplauxinv}{{\hat{\ts}}_{\impl\better}}
+\newcommand{\tsbetter}{\ts_\better}
+\newcommand{\transitions}{\Delta}
+\newcommand{\locimpl}{\ell}
+\newcommand{\locbetter}{\ell'}
+\newcommand{\locspec}{\ell^\spec}
+\newcommand{\observe}{\omicron}
+\newcommand{\observations}{O}
+\newcommand{\abstractfunc}{\alpha}
+\newcommand{\noob}{\tau}
+\newcommand{\actions}{A}
+\newcommand{\action}{a}
+\newcommand{\oaction}{b}
+\newcommand{\states}{\Sigma}
+\newcommand{\init}{\theta}
+\newcommand{\inv}{\mathit{Inv}}
+\newcommand{\state}{s}
+\newcommand{\ostate}{s'}
+\newcommand{\exec}{\rho}
+\newcommand{\execsof}{\m{execs}}
+\newcommand{\trace}{\sigma}
+\newcommand{\otrace}{\sigma'}
+\newcommand{\unstutter}{\sharp}
+\newcommand{\traceof}{\m{trace}}
+\newcommand{\tracesof}{\m{traces}}
+\newcommand{\stepsto}[1][]{\ifstrempty{#1}{\rightarrow}{\xrightarrow[]{#1}}}
+\newcommand{\movesto}[1]{\mathrel{\stackrel{#1}{\longrightarrow}\!\!{}^*}}
+\newcommand{\lang}{\mathcal{L}}
+\newcommand{\constraints}{\mathcal{C}}
+
+\newcommand{\pc}{\code{pc}}
+\newcommand{\at}[1]{{}@#1}
+\newcommand{\retact}{\m{return}}
+\newcommand{\callact}{\m{call}}
+
+\newcommand{\precond}{\varphi_{\m{pre}}}
+\newcommand{\postcond}{\varphi_{\m{post}}}
+\newcommand{\codesub}[1]{${}_{\code{#1}}$}
+% names
+
+ 
+% Local Variables:
+% tex-command: "gmake;:"
+% tex-main-file: "icing.ltx"
+% tex-dvi-view-command: "gmake preview;:"
+% End:

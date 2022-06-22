@@ -1,0 +1,59 @@
+\ProvidesPackage{peanutgallery}
+
+\definecolor{darkgreen}{rgb}{0,0.75,0}
+\definecolor{webred}{rgb}{0.5,0,0}
+\definecolor{webblue}{rgb}{0,0,0.8}
+
+\newcommand{\textred}[1]{\textcolor{red}{#1}}
+\ifx\noeditingmarks\undefined
+   \newcommand{\pgwrapper}[3]{\begingroup \color{#1}{#2}: {#3}\endgroup}
+   \newcommand{\pgwrapperb}[1]{\textbf{#1}}
+   \newcommand{\dangerwrapper}[1]{{\color{red}#1}}
+   \newcommand{\authnote}[2]{\textbf{#1's Note:} {\em #2}}
+   \newcommand{\authornote}[3]{{\color{#3}\textbf{[#1's Note:} {\em #2}]}}
+\else
+   \newcommand{\pgwrapperb}[1]{}
+   \newcommand{\pgwrapper}[3]{}
+   \newcommand{\dangerwrapper}[1]{}
+   \newcommand{\authnote}[2]{}
+   \newcommand{\authornote}[3]{}
+\fi
+
+\newcommand{\mnote}[1]{\authornote{a:}{#1}{webred}}
+
+\definecolor{darkgreen}{rgb}{0,0.65,0}
+\newcommand{\mw}[1]{\pgwrapper{red}{MW}{#1}}
+\newcommand{\tw}[1]{\pgwrapper{cyan}{TW}{#1}}
+\newcommand{\kj}[1]{\pgwrapper{darkgreen}{Benny}{#1}}
+\newcommand{\dc}[1]{\pgwrapper{blue}{DC}{#1}}
+
+\def\hn{\sffamily\selectfont}
+\newcommand{\mpfont}{\hn\scriptsize}
+\setlength\marginparwidth{36pt}
+\setlength\marginparsep{5pt}
+
+\ifx\noeditingmarks\undefined
+    \newcommand{\MPworker}[2]{\unskip{\color{#1}\vrule\vrule}{\marginpar{\raggedright\color{#1}\mpfont #2}}}
+\else
+    \newcommand{\MPworker}[2]{\unskip}
+\fi
+
+\newcommand{\MP}[1]{\MPworker{red}{MW: #1}}
+\newcommand{\TW}[1]{\MPworker{cyan}{TW: #1}}
+\newcommand{\KP}[1]{\MPworker{darkgreen}{KJ: #1}}
+\newcommand{\DC}[1]{\MPworker{blue}{DC: #1}}
+
+
+\ifx\noeditingmarks\undefined
+    \newcommand{\changebars}[2]{%
+    [{\color{magenta}\em\begingroup{#1}\endgroup}][{\color{magenta}\sout{#2}}]}
+\else
+    \newcommand{\changebars}[2]{#1}
+\fi
+
+\newcommand{\changebarsii}[2]{#1}
+
+\newcommand{\xxx}{\textbf{\textcolor{red}{[XXX]}}\typeout{Missing number}}
+\newcommand{\rrr}[1]{\textbf{\textcolor{red}{[ref #1]}}\typeout{Missing number}}
+\newcommand{\ccc}[1]{\textbf{\textcolor{red}{[cite #1]}}\typeout{Missing number}}
+\newcommand{\addcite}{\ifx\noeditingmarks\undefined\textbf{\textcolor{red}{[CITE]}}\fi}
