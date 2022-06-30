@@ -14,7 +14,7 @@ We wish to rewrite iterated conditionals, knowing the number of true and false c
 We wish to, as an extension of the project, bound the number of times each branch is taken.
 ## Tasks
 ## Papers
-- [ ] Florian Zuleger's work
+- [ ] Florian Zuleger's work (ranking functions)
 - [ ] Sumit Gulwani's work (instrument + count)
 - [ ] Hoffman's work (relational, multivariate)
 - [ ] Work on nonconvex invariants (incl. Monniaux & Gonnard, Zuleger)
