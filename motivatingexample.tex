@@ -1,0 +1,39 @@
+\textbf{Motivating Example}
+
+
+In the following example,
+\begin{Verbatim}[numbers=left]
+enqueue(a vertex in V)
+for i = 0..|V|:
+    v := dequeue()
+    visit(v)
+    visited[v] := true
+    for c : adjacencies(c):
+        if (!visited[c]):
+            enqueue(c)
+\end{Verbatim}
+
+Much like earlier, you'll run the ``true case'' and the ``false case'' a total of n times --
+but with Rhiad's flattening trick, this only gets us n total iterations.
+
+We'll probably want to use ``ring buffers'' to arithmetize queues.
+Looking around, it looks like some people have cited ``CLRS'' for BFS, which makes sense because
+CLRS is a compendium of algorithms; however, BFS was acc. to wikipedia invented by Konrad Zuse (and then first published by Edward F Moore).
+
+Other examples:
+Russian Roulette:
+Suppose the programmer supplies two character arrays and a FSM: an array representing loaded chambers of a revolver, with exactly three indices containing
+bullets and exactly three indices containing times:
+A0 = [•, ✕, •, ✕, ✕, •],
+An array of actions, where the value at each index indicates either whether the user wishes to take no action or to fire, for example
+A1 = [h, f, h, f, h, f],
+
+And an FSM over the alphabet $\{\mbox{``•''}, \mbox{``×''}\}×\{\mbox{``h''}, \mbox{``f''}\}$.
+
+Suppose the user wishes to check string inclusion in the FSM.
+
+Then, knowing that exactly half of the indices of the ``loaded'' gun are 
+
+
+Bouncing light:
+....
