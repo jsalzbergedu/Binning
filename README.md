@@ -9,7 +9,6 @@ We wish to rewrite iterated conditionals, knowing the number of true and false c
 ## Tasks
 - For this Zach envisions a new compiler -- one that allows us to both split witness generation and circuit checking, as well as one that allows for the program transformations we desire.
 ## Papers
-- [ ]
 
 # Counting/Bounding the number of times each branch is taken
 We wish to, as an extension of the project, bound the number of times each branch is taken.
@@ -18,4 +17,4 @@ We wish to, as an extension of the project, bound the number of times each branc
 - [ ] Florian Zuleger's work
 - [ ] Sumit Gulwani's work (instrument + count)
 - [ ] Hoffman's work (relational, multivariate)
-
+- [ ] Work on nonconvex invariants (incl. Monniaux & Gonnard, Zuleger)
