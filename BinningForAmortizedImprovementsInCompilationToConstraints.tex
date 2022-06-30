@@ -1,9 +1,11 @@
 \documentclass[letterpaper,10pt,twocolumn]{article}
+\usepackage{fancyvrb}
 \usepackage{usenix-2020-09}
 \usepackage{times}
 \usepackage{amsthm}
 \theoremstyle{definition}
 \newtheorem{exmp}{Example}[section]
+\usepackage[utf8]{inputenc}
 
 \synctex=1
 \input{preamble}
@@ -17,16 +19,28 @@
 \title{Binning for Amortized Improvements in Compilation to Constraints}
 
 
-\author{\rm{Zachary Destefano, Thomas Wies, Devora Chait-Roth, Jacob Salzberg} \vspace{.5pc}\\
+\author{\rm{Zachary Destefano, Thomas Wies, Mike Walfish, Jacob Salzberg} \vspace{.5pc}\\
 \rm{NYU Department of Computer Science, Courant Institute}}
 
 \date{}
 \maketitle
 
-\input{abstract}
+\textbf{\input{abstract}}
+
+Prior Work:
+
+Routing Network (Clos, Benes, Waksman, Reductions from RAMs to Succinct Delegatable Constraint Satisfaction Problems, Buffet)
+
+Similar constructions to binning (Bitonic Sorter, bounded displacement Benes)
+
+Upper bounding the number of times a program statement has been hit:
+(Cousot, Rosendahl, Hoffmann, $^{\mbox{Avanzini (not sure)}}$, $^{\mbox{Urban (also only maybe)}}$,
+potentially symbolic analysis, potentially instrumentation and concrete analysis)
+
+
 % \input{intro}
 % \input{background3}
-% \input{motivatingexample}
+\input{motivatingexample}
 % \input{framework}
 % \input{examples}
 % \input{eval}

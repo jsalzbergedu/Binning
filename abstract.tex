@@ -1,7 +1,7 @@
-In proof-based verifiable computation, many systems have been built that faithfully represent the semantics of imperative programs in constraints (buffet, pequin, xjsnark, circ).
+In proof-based verifiable computation, extant systems faithfully represent the semantics of imperative programs in constraints (buffet, pequin, xjsnark, circ).
 However, these systems still suffer from prohibitively high costs for generating proofs, driven by the high number of constraints they output.
-This is due in part to the representation of branching instructions and permutations in constraints, currently compiled to constraints that nullify unused branches and permutation networks respectively.
+This is due in part to the representation of branching instructions and permutations, currently compiled to constraints that conditionally nullify branches and routing networks respectively.
 Thus, compiler optimizations addressing these inefficiencies are desirable.
-To address the high number of constraints generated and bring proof-based verifiable computation of imperative programs closer to reality, we introduce \textit{binning networks},
+To this end, we introduce \textit{binning networks},
 a new primitive based on arithmetic constraints that more succinctly represent partitioning. We then draw on established literature for program analysis, especially complexity analysis,
 to find cases where we can use this construction for amortized improvements in the compilation of branching and recursion to constraints.
