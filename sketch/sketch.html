@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8"/>
+    <title>sketch.c</title>
+<meta name="generator" content="emacs 28.0.92; htmlfontify 0.21" />
+<style type="text/css"><!-- 
+body, pre { text-decoration: none;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  color: #383a42;  background: #fafafa;  font-size: 10pt; }
+span.default   { text-decoration: none;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  color: #383a42;  background: #fafafa;  font-size: 10pt; }
+span.default a {  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  color: #383a42;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-function-face-3   { text-decoration: none;  color: #e2bf8f;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-function-face-3 a {  color: #e2bf8f;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-variable-face-9   { text-decoration: none;  color: #3e9f4a;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-variable-face-9 a {  color: #3e9f4a;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-variable-face-1   { text-decoration: none;  color: #58c1a4;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-variable-face-1 a {  color: #58c1a4;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-variable-face-3   { text-decoration: none;  color: #36815b;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-variable-face-3 a {  color: #36815b;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-variable-face-4   { text-decoration: none;  color: #83c65d;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-variable-face-4 a {  color: #83c65d;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.rainbow-delimiters-depth-3-face   { text-decoration: none;  color: #50a14f;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.rainbow-delimiters-depth-3-face a {  color: #50a14f;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-function-face-1   { text-decoration: none;  color: #927754;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-function-face-1 a {  color: #927754;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.rainbow-delimiters-depth-2-face   { text-decoration: none;  color: #a626a4;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.rainbow-delimiters-depth-2-face a {  color: #a626a4;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-function-face-2   { text-decoration: none;  color: #eb992c;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-function-face-2 a {  color: #eb992c;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-variable-face-4-0038   { text-decoration: none;  color: #83c65d;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-variable-face-4-0038 a {  color: #83c65d;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-function-face-3-0031   { text-decoration: none;  color: #e2bf8f;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-function-face-3-0031 a {  color: #e2bf8f;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-parameter-face-7   { text-decoration: none;  color: #7eb769;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-parameter-face-7 a {  color: #7eb769;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-function-face-0-0029   { text-decoration: none;  color: #e5b124;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-function-face-0-0029 a {  color: #e5b124;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-member-face-0027   { text-decoration: none;  font-style: italic;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  color: #383a42;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-member-face-0027 a {  font-style: italic;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  color: #383a42;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-member-face-0026   { text-decoration: none;  font-style: italic;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  color: #383a42;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-member-face-0026 a {  font-style: italic;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  color: #383a42;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-member-face-0037   { text-decoration: none;  font-style: italic;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  color: #383a42;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-member-face-0037 a {  font-style: italic;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  color: #383a42;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.rainbow-delimiters-depth-6-face-0024   { text-decoration: none;  color: #4078f2;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.rainbow-delimiters-depth-6-face-0024 a {  color: #4078f2;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-parameter-face-0-0036   { text-decoration: none;  color: #429921;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-parameter-face-0-0036 a {  color: #429921;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.rainbow-delimiters-depth-5-face-0020   { text-decoration: none;  color: #4db5bd;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.rainbow-delimiters-depth-5-face-0020 a {  color: #4db5bd;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-parameter-face-2-0035   { text-decoration: none;  color: #5ec648;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-parameter-face-2-0035 a {  color: #5ec648;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-member-face-0017   { text-decoration: none;  font-style: italic;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  color: #383a42;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-member-face-0017 a {  font-style: italic;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  color: #383a42;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.negation-char   { text-decoration: none;  font-weight: 700;  font-family: Inconsolata LGC;  font-stretch: normal;  font-style: normal;  color: #383a42;  background: #fafafa;  font-size: 10pt; }
+span.negation-char a {  font-weight: 700;  font-family: Inconsolata LGC;  font-stretch: normal;  font-style: normal;  color: #383a42;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-variable-face-7-0014   { text-decoration: none;  color: #7eb769;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-variable-face-7-0014 a {  color: #7eb769;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-variable-face-6-0016   { text-decoration: none;  color: #43cc71;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-variable-face-6-0016 a {  color: #43cc71;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-variable-face-5-0034   { text-decoration: none;  color: #417b2f;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-variable-face-5-0034 a {  color: #417b2f;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-variable-face-3-0033   { text-decoration: none;  color: #36815b;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-variable-face-3-0033 a {  color: #36815b;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-parameter-face-3   { text-decoration: none;  color: #36815b;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-parameter-face-3 a {  color: #36815b;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-parameter-face-1   { text-decoration: none;  color: #58c1a4;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-parameter-face-1 a {  color: #58c1a4;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-parameter-face-9   { text-decoration: none;  color: #3e9f4a;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-parameter-face-9 a {  color: #3e9f4a;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-parameter-face-6   { text-decoration: none;  color: #43cc71;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-parameter-face-6 a {  color: #43cc71;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-function-face-1-0012   { text-decoration: none;  color: #927754;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-function-face-1-0012 a {  color: #927754;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-macro-face-1   { text-decoration: none;  color: #c5373d;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-macro-face-1 a {  color: #c5373d;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-macro-face-2   { text-decoration: none;  color: #e8a272;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-macro-face-2 a {  color: #e8a272;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-macro-face-0   { text-decoration: none;  color: #e79528;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-macro-face-0 a {  color: #e79528;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.rainbow-delimiters-depth-4-face-0011   { text-decoration: none;  color: #b751b6;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.rainbow-delimiters-depth-4-face-0011 a {  color: #b751b6;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-parameter-face-2   { text-decoration: none;  color: #5ec648;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-parameter-face-2 a {  color: #5ec648;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-macro-face-9   { text-decoration: none;  color: #cf6d49;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-macro-face-9 a {  color: #cf6d49;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.rainbow-delimiters-depth-3-face-0010   { text-decoration: none;  color: #50a14f;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.rainbow-delimiters-depth-3-face-0010 a {  color: #50a14f;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-parameter-face-0   { text-decoration: none;  color: #429921;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-parameter-face-0 a {  color: #429921;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.lsp-face-highlight-textual-0032   { text-decoration: none;  font-weight: 700;  color: #f0f0f0;  background: #c6c7c7;  font-family: Inconsolata LGC;  font-stretch: normal;  font-style: normal;  font-size: 10pt; }
+span.lsp-face-highlight-textual-0032 a {  font-weight: 700;  color: #f0f0f0;  background: #c6c7c7;  font-family: Inconsolata LGC;  font-stretch: normal;  font-style: normal;  font-size: 10pt; text-decoration: underline; }
+span.rainbow-delimiters-depth-2-face-0009   { text-decoration: none;  color: #a626a4;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.rainbow-delimiters-depth-2-face-0009 a {  color: #a626a4;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.variable-name   { text-decoration: none;  color: #6a1868;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.variable-name a {  color: #6a1868;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-macro-face-6   { text-decoration: none;  color: #9b4a31;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-macro-face-6 a {  color: #9b4a31;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-type-face-6-0013   { text-decoration: none;  color: #de3864;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-type-face-6-0013 a {  color: #de3864;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-member-face-0008   { text-decoration: none;  font-style: italic;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  color: #383a42;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-member-face-0008 a {  font-style: italic;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  color: #383a42;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-member-face-0007   { text-decoration: none;  font-style: italic;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  color: #383a42;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-member-face-0007 a {  font-style: italic;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  color: #383a42;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-member-face-0006   { text-decoration: none;  font-style: italic;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  color: #383a42;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-member-face-0006 a {  font-style: italic;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  color: #383a42;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-type-face-5   { text-decoration: none;  color: #dd82bc;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-type-face-5 a {  color: #dd82bc;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.keyword   { text-decoration: none;  color: #e45649;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.keyword a {  color: #e45649;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-global-variable-face-0005   { text-decoration: none;  font-weight: 800;  font-family: Inconsolata LGC;  font-stretch: normal;  font-style: normal;  color: #383a42;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-global-variable-face-0005 a {  font-weight: 800;  font-family: Inconsolata LGC;  font-stretch: normal;  font-style: normal;  color: #383a42;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-global-variable-face-0004   { text-decoration: none;  font-weight: 800;  font-family: Inconsolata LGC;  font-stretch: normal;  font-style: normal;  color: #383a42;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-global-variable-face-0004 a {  font-weight: 800;  font-family: Inconsolata LGC;  font-stretch: normal;  font-style: normal;  color: #383a42;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-global-variable-face-0003   { text-decoration: none;  font-weight: 800;  font-family: Inconsolata LGC;  font-stretch: normal;  font-style: normal;  color: #383a42;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-global-variable-face-0003 a {  font-weight: 800;  font-family: Inconsolata LGC;  font-stretch: normal;  font-style: normal;  color: #383a42;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.rainbow-delimiters-depth-1-face-0002   { text-decoration: none;  color: #4078f2;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.rainbow-delimiters-depth-1-face-0002 a {  color: #4078f2;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.ccls-sem-global-variable-face-0001   { text-decoration: none;  font-weight: 800;  font-family: Inconsolata LGC;  font-stretch: normal;  font-style: normal;  color: #383a42;  background: #fafafa;  font-size: 10pt; }
+span.ccls-sem-global-variable-face-0001 a {  font-weight: 800;  font-family: Inconsolata LGC;  font-stretch: normal;  font-style: normal;  color: #383a42;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.type   { text-decoration: none;  color: #986801;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.type a {  color: #986801;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.comment   { text-decoration: none;  color: #9ca0a4;  font-style: normal;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  background: #fafafa;  font-size: 10pt; }
+span.comment a {  color: #9ca0a4;  font-style: normal;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.comment-delimiter   { text-decoration: none;  color: #9ca0a4;  font-style: normal;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  background: #fafafa;  font-size: 10pt; }
+span.comment-delimiter a {  color: #9ca0a4;  font-style: normal;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.string   { text-decoration: none;  color: #50a14f;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.string a {  color: #50a14f;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.string-face-0000   { text-decoration: none;  color: #50a14f;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; }
+span.string-face-0000 a {  color: #50a14f;  font-family: Inconsolata LGC;  font-stretch: normal;  font-weight: 500;  font-style: normal;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+span.preprocessor   { text-decoration: none;  font-weight: 700;  font-family: Inconsolata LGC;  font-stretch: normal;  font-style: normal;  color: #383a42;  background: #fafafa;  font-size: 10pt; }
+span.preprocessor a {  font-weight: 700;  font-family: Inconsolata LGC;  font-stretch: normal;  font-style: normal;  color: #383a42;  background: #fafafa;  font-size: 10pt; text-decoration: underline; }
+ --></style>
+
+    <script type="text/javascript"><!--
+  // this function is needed to work around
+  // a bug in IE related to element attributes
+  function hasClass(obj)
+  {
+      var result = false;
+      if (obj.getAttributeNode("class") != null)
+      {
+          result = obj.getAttributeNode("class").value;
+      }
+      return result;
+  }
+
+  function stripe(id)
+  {
+      // the flag we'll use to keep track of
+      // whether the current row is odd or even
+      var even = false;
+
+      // if arguments are provided to specify the colors
+      // of the even & odd rows, then use them;
+      // otherwise use the following defaults:
+      var evenColor = arguments[1] ? arguments[1] : "#fff";
+      var oddColor  = arguments[2] ? arguments[2] : "#ddd";
+
+      // obtain a reference to the desired table
+      // if no such table exists, abort
+      var table = document.getElementById(id);
+      if (! table) { return; }
+
+      // by definition, tables can have more than one tbody
+      // element, so we'll have to get the list of child
+      // &lt;tbody&gt;s
+      var tbodies = table.getElementsByTagName("tbody");
+
+      // and iterate through them...
+      for (var h = 0; h < tbodies.length; h++)
+      {
+          // find all the &lt;tr&gt; elements...
+          var trs = tbodies[h].getElementsByTagName("tr");
+
+          // ... and iterate through them
+          for (var i = 0; i < trs.length; i++)
+          {
+              // avoid rows that have a class attribute
+              // or backgroundColor style
+              if (! hasClass(trs[i]) &&
+                  ! trs[i].style.backgroundColor)
+              {
+                  // get all the cells in this row...
+                  var tds = trs[i].getElementsByTagName("td");
+
+                  // and iterate through them...
+                  for (var j = 0; j < tds.length; j++)
+                  {
+                      var mytd = tds[j];
+
+                      // avoid cells that have a class attribute
+                      // or backgroundColor style
+                      if (! hasClass(mytd) &&
+                          ! mytd.style.backgroundColor)
+                      {
+                          mytd.style.backgroundColor =
+                            even ? evenColor : oddColor;
+                      }
+                  }
+              }
+              // flip from odd to even, or vice-versa
+              even =  ! even;
+          }
+      }
+  }
+
+  function toggle_invis( name )
+  {
+      var filter =
+        { acceptNode:
+          function( node )
+          { var classname = node.id;
+            if( classname )
+            { var classbase = classname.substr( 0, name.length );
+              if( classbase == name ) { return NodeFilter.FILTER_ACCEPT; } }
+            return NodeFilter.FILTER_SKIP; } };
+      var walker = document.createTreeWalker( document.body           ,
+                                              NodeFilter.SHOW_ELEMENT ,
+                                              filter                  ,
+                                              false                   );
+      while( walker.nextNode() )
+      {
+          var e = walker.currentNode;
+          if( e.style.display == "none" ) { e.style.display = "inline"; }
+          else                            { e.style.display = "none";   }
+      }
+  }
+--> </script>
+  </head>
+  <body onload="stripe('index'); return true;">
+
+<pre><span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="string-face-0000">&lt;</span><span class="string">stdio.h</span><span class="string-face-0000">&gt;</span>
+<span class="preprocessor">#</span><span class="preprocessor">include</span> <span class="string-face-0000">&lt;</span><span class="string">stdlib.h</span><span class="string-face-0000">&gt;</span>
+<span class="comment-delimiter">/</span><span class="comment-delimiter">*</span><span class="comment">
+</span><span class="comment"> </span><span class="comment">* T_S, T_I, T_B:
+</span><span class="comment"> </span><span class="comment">* T_S: The specification requires that a BFS has been run
+</span><span class="comment"> </span><span class="comment">* T_I: The old implementation will still abuse nondeterminism; it will
+</span><span class="comment"> </span><span class="comment">*      simply also iterate over useless edges
+</span><span class="comment"> </span><span class="comment">* T_B: The &quot;better&quot; implementation will allow us to run BFS without iterating over
+</span><span class="comment"> </span><span class="comment">*      useless edges
+</span><span class="comment"> </span><span class="comment">* Witness generation code: I know exactly what this would look like, so let</span><span class="comment">'</span><span class="comment">s do that first.
+</span><span class="comment-delimiter"> </span><span class="comment-delimiter">*/</span>
+
+<span class="comment-delimiter">/</span><span class="comment-delimiter">* </span><span class="comment">TODO: test this with pequin, code up the version that works as a checker (by taking edges in the order in which they</span><span class="comment">'</span><span class="comment">re traversed), code up the checker version with pqn, and see how this can be extended w/ binning</span><span class="comment-delimiter"> */</span>
+
+<span class="comment-delimiter">/</span><span class="comment-delimiter">/ </span><span class="comment">Array repr:
+</span><span class="comment-delimiter">/</span><span class="comment-delimiter">/ </span><span class="comment">We</span><span class="comment">'</span><span class="comment">ll have:
+</span><span class="comment-delimiter">/</span><span class="comment-delimiter">/ </span><span class="comment">vertices 0..N
+</span><span class="comment-delimiter">/</span><span class="comment-delimiter">/ </span><span class="comment">Then each vertex will index into a list spec</span><span class="comment">'</span><span class="comment">ing the start index for the adjacencies
+</span><span class="comment-delimiter">/</span><span class="comment-delimiter">/ </span><span class="comment">and a list spec</span><span class="comment">'</span><span class="comment">ing the end index for the adjacencies (or terminated with -1)
+</span><span class="comment-delimiter">/</span><span class="comment-delimiter">/ </span><span class="comment">allowing for efficient bfs
+</span><span class="comment-delimiter">/</span><span class="comment-delimiter">/ </span><span class="comment">or maybe i should look into msc
+</span><span class="comment-delimiter">/</span><span class="comment-delimiter">/ </span><span class="comment">okay msc only gives edges, which would be really inefficient for bfs, unless
+</span><span class="comment-delimiter">/</span><span class="comment-delimiter">/ </span><span class="comment">it</span><span class="comment">'</span><span class="comment">s bfs on a directed graph and the edges (v, u) are already sorted by v.
+</span><span class="comment-delimiter">/</span><span class="comment-delimiter">/ </span><span class="comment">However, edges sorted by which of (v, u) is taken in the BFS would make sense
+</span><span class="comment-delimiter">/</span><span class="comment-delimiter">/ </span><span class="comment">if we consider that we can leverage nodeterministic information.
+</span><span class="comment-delimiter">/</span><span class="comment-delimiter">/ </span><span class="comment">It all depends on pacakaging:
+</span><span class="comment-delimiter">/</span><span class="comment-delimiter">/ </span><span class="comment">-- we could imagine packaging this as &quot;extracting a tree out of the graph&quot;, much like mst, in which case binning is just an optimal low level gadget, or
+</span><span class="comment-delimiter">/</span><span class="comment-delimiter">/ </span><span class="comment">-- we could imagine packaging this as &quot;a compiler optimization&quot;, like with bfs, in which case binning is a backend
+</span><span class="comment-delimiter">/</span><span class="comment-delimiter">/ </span><span class="comment">The latter is probably best for **packaging** purposes. The former is obviously asymptotically more optimal, and gives better insights on binning networks themselves
+</span>
+<span class="comment-delimiter">/</span><span class="comment-delimiter">/ </span><span class="comment">The simplest example:
+</span><span class="comment-delimiter">/</span><span class="comment-delimiter">/ </span><span class="comment">size n
+</span><span class="type">i</span><span class="type">n</span><span class="type">t</span> <span class="ccls-sem-global-variable-face-0001">vertex_to_edge_string_offset</span><span class="rainbow-delimiters-depth-1-face-0002">[</span><span class="rainbow-delimiters-depth-1-face-0002">]</span> = <span class="rainbow-delimiters-depth-1-face-0002">{</span>0, 3, 6, 9<span class="rainbow-delimiters-depth-1-face-0002">}</span>;
+<span class="comment-delimiter">/</span><span class="comment-delimiter">/ </span><span class="comment">size n
+</span><span class="type">i</span><span class="type">n</span><span class="type">t</span> <span class="ccls-sem-global-variable-face-0003">vertex_data</span><span class="rainbow-delimiters-depth-1-face-0002">[</span><span class="rainbow-delimiters-depth-1-face-0002">]</span> = <span class="rainbow-delimiters-depth-1-face-0002">{</span>0, 1, 2, 3<span class="rainbow-delimiters-depth-1-face-0002">}</span>;
+<span class="comment-delimiter">/</span><span class="comment-delimiter">/ </span><span class="comment">size m * 2 + n
+</span><span class="type">i</span><span class="type">n</span><span class="type">t</span> <span class="ccls-sem-global-variable-face-0004">edge_strings</span><span class="rainbow-delimiters-depth-1-face-0002">[</span><span class="rainbow-delimiters-depth-1-face-0002">]</span> = <span class="rainbow-delimiters-depth-1-face-0002">{</span>1, 3, -1, 0, 2, -1, 1, 3, -1, 0, 2, -1<span class="rainbow-delimiters-depth-1-face-0002">}</span>;
+<span class="type">i</span><span class="type">n</span><span class="type">t</span> <span class="ccls-sem-global-variable-face-0005">visited</span><span class="rainbow-delimiters-depth-1-face-0002">[</span><span class="rainbow-delimiters-depth-1-face-0002">]</span> = <span class="rainbow-delimiters-depth-1-face-0002">{</span>0, 0, 0, 0<span class="rainbow-delimiters-depth-1-face-0002">}</span>;
+
+<span class="keyword">t</span><span class="keyword">ypedef</span> <span class="ccls-sem-type-face-5">struct</span> <span class="rainbow-delimiters-depth-1-face-0002">{</span>
+  <span class="type">in</span><span class="type">t</span> *<span class="ccls-sem-member-face-0006">queue</span>;
+  <span class="type">in</span><span class="type">t</span> <span class="ccls-sem-member-face-0007">first_enqueued</span>;
+  <span class="type">in</span><span class="type">t</span> <span class="ccls-sem-member-face-0008">last_enqueued</span>;
+<span class="rainbow-delimiters-depth-1-face-0002">}</span> <span class="ccls-sem-type-face-6-0013">Queue</span>;
+
+<span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="ccls-sem-macro-face-6">INITIALIZE_QUEUE</span><span class="rainbow-delimiters-depth-1-face-0002">(</span><span class="variable-name">queuename</span>, <span class="variable-name">value</span><span class="rainbow-delimiters-depth-1-face-0002">)</span> <span class="rainbow-delimiters-depth-1-face-0002">{</span><span class="rainbow-delimiters-depth-2-face-0009">(</span>queuename<span class="rainbow-delimiters-depth-2-face-0009">)</span>-&gt;<span class="ccls-sem-member-face-0006">queue</span><span class="rainbow-delimiters-depth-2-face-0009">[</span>0<span class="rainbow-delimiters-depth-2-face-0009">]</span> = <span class="rainbow-delimiters-depth-2-face-0009">(</span>value<span class="rainbow-delimiters-depth-2-face-0009">)</span>; <span class="rainbow-delimiters-depth-2-face-0009">(</span>queuename<span class="rainbow-delimiters-depth-2-face-0009">)</span>-&gt;<span class="ccls-sem-member-face-0007">first_enqueued</span> = 0; <span class="rainbow-delimiters-depth-2-face-0009">(</span>queuename<span class="rainbow-delimiters-depth-2-face-0009">)</span>-&gt;<span class="ccls-sem-member-face-0008">last_enqueued</span> = 0;<span class="rainbow-delimiters-depth-1-face-0002">}</span>
+<span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="lsp-face-highlight-textual-0032">VISIT</span><span class="rainbow-delimiters-depth-1-face-0002">(</span><span class="variable-name">vertex</span>, <span class="variable-name">state</span><span class="rainbow-delimiters-depth-1-face-0002">)</span> <span class="rainbow-delimiters-depth-1-face-0002">{</span>state -= <span class="ccls-sem-parameter-face-0">vertex_data</span><span class="rainbow-delimiters-depth-2-face-0009">[</span><span class="rainbow-delimiters-depth-3-face-0010">(</span>vertex<span class="rainbow-delimiters-depth-3-face-0010">)</span><span class="rainbow-delimiters-depth-2-face-0009">]</span>;<span class="rainbow-delimiters-depth-1-face-0002">}</span>
+<span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="ccls-sem-macro-face-9">DEQUEUE</span><span class="rainbow-delimiters-depth-1-face-0002">(</span><span class="variable-name">into</span>, <span class="variable-name">queuename</span><span class="rainbow-delimiters-depth-1-face-0002">)</span> <span class="rainbow-delimiters-depth-1-face-0002">{</span>into = <span class="rainbow-delimiters-depth-2-face-0009">(</span>queuename<span class="rainbow-delimiters-depth-2-face-0009">)</span>-&gt;<span class="ccls-sem-member-face-0006">queue</span><span class="rainbow-delimiters-depth-2-face-0009">[</span><span class="ccls-sem-parameter-face-2">queue</span>-&gt;<span class="ccls-sem-member-face-0007">first_enqueued</span><span class="rainbow-delimiters-depth-2-face-0009">]</span>; <span class="rainbow-delimiters-depth-2-face-0009">(</span>queuename<span class="rainbow-delimiters-depth-2-face-0009">)</span>-&gt;<span class="ccls-sem-member-face-0007">first_enqueued</span> += 1;<span class="rainbow-delimiters-depth-1-face-0002">}</span>
+<span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="ccls-sem-macro-face-6">ENQUEUE</span><span class="rainbow-delimiters-depth-1-face-0002">(</span><span class="variable-name">element</span>, <span class="variable-name">queuename</span><span class="rainbow-delimiters-depth-1-face-0002">)</span> <span class="rainbow-delimiters-depth-1-face-0002">{</span><span class="rainbow-delimiters-depth-2-face-0009">(</span>queuename<span class="rainbow-delimiters-depth-2-face-0009">)</span>-&gt;<span class="ccls-sem-member-face-0006">queue</span><span class="rainbow-delimiters-depth-2-face-0009">[</span>++<span class="rainbow-delimiters-depth-3-face-0010">(</span><span class="rainbow-delimiters-depth-4-face-0011">(</span>queuename<span class="rainbow-delimiters-depth-4-face-0011">)</span>-&gt;<span class="ccls-sem-member-face-0008">last_enqueued</span><span class="rainbow-delimiters-depth-3-face-0010">)</span><span class="rainbow-delimiters-depth-2-face-0009">]</span> = <span class="rainbow-delimiters-depth-2-face-0009">(</span>element<span class="rainbow-delimiters-depth-2-face-0009">)</span>;<span class="rainbow-delimiters-depth-1-face-0002">}</span>
+<span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="ccls-sem-macro-face-0">EMPTY</span><span class="rainbow-delimiters-depth-1-face-0002">(</span><span class="variable-name">queuename</span><span class="rainbow-delimiters-depth-1-face-0002">)</span> <span class="rainbow-delimiters-depth-1-face-0002">(</span><span class="rainbow-delimiters-depth-2-face-0009">(</span>queuename<span class="rainbow-delimiters-depth-2-face-0009">)</span>-&gt;<span class="ccls-sem-member-face-0007">first_enqueued</span> &gt; <span class="rainbow-delimiters-depth-2-face-0009">(</span>queuename<span class="rainbow-delimiters-depth-2-face-0009">)</span>-&gt;<span class="ccls-sem-member-face-0008">last_enqueued</span><span class="rainbow-delimiters-depth-1-face-0002">)</span>
+<span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="ccls-sem-macro-face-2">STATE_PROCESS_QUEUE</span> 0
+<span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="ccls-sem-macro-face-1">STATE_ENQUEUE_ADJACENCIES</span> 1
+<span class="comment-delimiter">/</span><span class="comment-delimiter">/ </span><span class="comment">Then the bfs will look like the following:
+</span><span class="comment-delimiter">/</span><span class="comment-delimiter">/ </span><span class="comment">(Where queue is at least as long as the vertices)
+</span><span class="type">i</span><span class="type">n</span><span class="type">t</span> <span class="ccls-sem-function-face-1-0012">bfs</span><span class="rainbow-delimiters-depth-1-face-0002">(</span><span class="type">int</span> <span class="ccls-sem-parameter-face-6">n</span>, <span class="type">int</span> <span class="ccls-sem-parameter-face-2">m</span>, <span class="type">int</span> *<span class="ccls-sem-parameter-face-9">vertex_to_edge_string_offset</span>, <span class="type">int</span> *<span class="ccls-sem-parameter-face-0">vertex_data</span>, <span class="type">int</span> *<span class="ccls-sem-parameter-face-0">edge_strings</span>, <span class="type">int</span> <span class="ccls-sem-parameter-face-1">start_vertex</span>, <span class="ccls-sem-type-face-6-0013">Queue</span> *<span class="ccls-sem-parameter-face-2">queue</span>, <span class="type">int</span> *<span class="ccls-sem-parameter-face-3">visited</span><span class="rainbow-delimiters-depth-1-face-0002">)</span> <span class="rainbow-delimiters-depth-1-face-0002">{</span>
+  <span class="type">in</span><span class="type">t</span> <span class="ccls-sem-variable-face-3-0033">result</span> = 0;
+  <span class="ccls-sem-macro-face-6">INITIALIZE_QUEUE</span><span class="ccls-sem-member-face-0007">(</span><span class="ccls-sem-parameter-face-2">queue</span><span class="ccls-sem-member-face-0007">, </span><span class="ccls-sem-parameter-face-1">start_vertex</span><span class="ccls-sem-member-face-0007">)</span>;
+  <span class="type">i</span><span class="type">n</span><span class="type">t</span> <span class="ccls-sem-variable-face-5-0034">state</span> = 0;
+  <span class="type">in</span><span class="type">t</span> <span class="ccls-sem-variable-face-6-0016">v</span> = -1;
+  <span class="type">in</span><span class="type">t</span> <span class="ccls-sem-variable-face-7-0014">j</span> = 0;
+  <span class="comment-delimiter">/</span><span class="comment-delimiter">/ </span><span class="comment">2*m iterations (handshake lemma, the degree of each vertex is added to the queue)
+</span>  <span class="comment-delimiter">// </span><span class="comment">and two states per iteration (once dequeing, once enqueueing)
+</span>  <span class="keyword">f</span><span class="keyword">or</span> <span class="rainbow-delimiters-depth-2-face-0009">(</span><span class="type">in</span><span class="type">t</span> <span class="ccls-sem-variable-face-5-0034">_i</span> = 0; <span class="ccls-sem-variable-face-5-0034">_i</span> &lt; 4 * <span class="ccls-sem-parameter-face-2">m</span>; <span class="ccls-sem-variable-face-5-0034">_i</span>++<span class="rainbow-delimiters-depth-2-face-0009">)</span> <span class="rainbow-delimiters-depth-2-face-0009">{</span>
+    <span class="keyword">if</span> <span class="rainbow-delimiters-depth-3-face-0010">(</span><span class="ccls-sem-variable-face-5-0034">state</span> == <span class="ccls-sem-macro-face-2">STATE_PROCESS_QUEUE</span> &amp;&amp; <span class="negation-char">!</span><span class="ccls-sem-macro-face-0">EMPTY</span><span class="ccls-sem-member-face-0017">(</span><span class="ccls-sem-parameter-face-2">queue</span><span class="ccls-sem-member-face-0017">)</span><span class="rainbow-delimiters-depth-3-face-0010">)</span> <span class="rainbow-delimiters-depth-3-face-0010">{</span>
+      <span class="ccls-sem-macro-face-9">DEQUEUE</span><span class="ccls-sem-parameter-face-2-0035">(</span><span class="ccls-sem-variable-face-6-0016">v</span><span class="ccls-sem-parameter-face-2">, queue</span><span class="ccls-sem-parameter-face-2-0035">)</span>;
+      <span class="keyword">if</span> <span class="rainbow-delimiters-depth-4-face-0011">(</span><span class="negation-char">!</span><span class="ccls-sem-parameter-face-3">visited</span><span class="rainbow-delimiters-depth-5-face-0020">[</span><span class="ccls-sem-variable-face-6-0016">v</span><span class="rainbow-delimiters-depth-5-face-0020">]</span><span class="rainbow-delimiters-depth-4-face-0011">)</span> <span class="rainbow-delimiters-depth-4-face-0011">{</span>
+        <span class="lsp-face-highlight-textual-0032">VISIT</span><span class="ccls-sem-parameter-face-0-0036">(</span><span class="ccls-sem-variable-face-6-0016">v</span><span class="ccls-sem-parameter-face-0">, </span><span class="ccls-sem-variable-face-3-0033">result</span><span class="ccls-sem-parameter-face-0-0036">)</span>;
+        <span class="ccls-sem-parameter-face-3">visited</span><span class="rainbow-delimiters-depth-5-face-0020">[</span><span class="ccls-sem-variable-face-6-0016">v</span><span class="rainbow-delimiters-depth-5-face-0020">]</span> = 1;
+        <span class="ccls-sem-variable-face-7-0014">j</span> = 0;
+        <span class="ccls-sem-variable-face-5-0034">state</span> = <span class="ccls-sem-macro-face-1">STATE_ENQUEUE_ADJACENCIES</span>;
+      <span class="rainbow-delimiters-depth-4-face-0011">}</span>
+    <span class="rainbow-delimiters-depth-3-face-0010">}</span> <span class="keyword">else</span> <span class="keyword">if</span> <span class="rainbow-delimiters-depth-3-face-0010">(</span><span class="ccls-sem-variable-face-5-0034">state</span> == <span class="ccls-sem-macro-face-1">STATE_ENQUEUE_ADJACENCIES</span><span class="rainbow-delimiters-depth-3-face-0010">)</span> <span class="rainbow-delimiters-depth-3-face-0010">{</span>
+      <span class="keyword">if</span> <span class="rainbow-delimiters-depth-4-face-0011">(</span><span class="ccls-sem-parameter-face-0">edge_strings</span><span class="rainbow-delimiters-depth-5-face-0020">[</span><span class="ccls-sem-parameter-face-9">vertex_to_edge_string_offset</span><span class="rainbow-delimiters-depth-6-face-0024">[</span><span class="ccls-sem-variable-face-6-0016">v</span><span class="rainbow-delimiters-depth-6-face-0024">]</span> + <span class="ccls-sem-variable-face-7-0014">j</span><span class="rainbow-delimiters-depth-5-face-0020">]</span> != -1<span class="rainbow-delimiters-depth-4-face-0011">)</span> <span class="rainbow-delimiters-depth-4-face-0011">{</span>
+        <span class="ccls-sem-macro-face-6">ENQUEUE</span><span class="ccls-sem-member-face-0037">(</span><span class="ccls-sem-parameter-face-0">edge_strings</span><span class="ccls-sem-member-face-0026">[</span><span class="ccls-sem-parameter-face-9">vertex_to_edge_string_offset</span><span class="ccls-sem-member-face-0027">[</span><span class="ccls-sem-variable-face-6-0016">v</span><span class="ccls-sem-member-face-0027">]</span><span class="ccls-sem-member-face-0006"> + </span><span class="ccls-sem-variable-face-7-0014">j</span><span class="ccls-sem-member-face-0026">]</span><span class="ccls-sem-member-face-0006">, </span><span class="ccls-sem-parameter-face-2">queue</span><span class="ccls-sem-member-face-0037">)</span>;
+        <span class="ccls-sem-variable-face-7-0014">j</span> += 1;
+      <span class="rainbow-delimiters-depth-4-face-0011">}</span> <span class="keyword">else</span> <span class="rainbow-delimiters-depth-4-face-0011">{</span>
+        <span class="ccls-sem-variable-face-5-0034">state</span> = <span class="ccls-sem-macro-face-2">STATE_PROCESS_QUEUE</span>;
+      <span class="rainbow-delimiters-depth-4-face-0011">}</span>
+    <span class="rainbow-delimiters-depth-3-face-0010">}</span>
+  <span class="rainbow-delimiters-depth-2-face-0009">}</span>
+
+  <span class="keyword">return</span> <span class="ccls-sem-variable-face-3-0033">result</span>;
+<span class="rainbow-delimiters-depth-1-face-0002">}</span>
+
+<span class="comment-delimiter">/</span><span class="comment-delimiter">*</span><span class="comment">
+</span><span class="comment"> </span><span class="comment">* For the checker code:
+</span><span class="comment"> </span><span class="comment">* Edges are input as an array E
+</span><span class="comment"> </span><span class="comment">* such that each pair E_i, E_i+1 where i % 2 == 0 specifies a pair of vertices V_(E_i) V_(E_i/2)
+</span><span class="comment-delimiter"> </span><span class="comment-delimiter">*/</span>
+<span class="type">i</span><span class="type">n</span><span class="type">t</span> <span class="ccls-sem-function-face-0-0029">main</span><span class="rainbow-delimiters-depth-1-face-0002">(</span><span class="type">int</span> <span class="ccls-sem-parameter-face-7">argc</span>, <span class="type">char</span> **<span class="ccls-sem-parameter-face-6">argv</span><span class="rainbow-delimiters-depth-1-face-0002">)</span> <span class="rainbow-delimiters-depth-1-face-0002">{</span>
+  <span class="comment-delimiter">/</span><span class="comment-delimiter">/ </span><span class="comment">int arr[] = {0, 0, 0, 0, 0};
+</span>  <span class="type">i</span><span class="type">n</span><span class="type">t</span> *<span class="ccls-sem-variable-face-3-0033">arr</span> = <span class="rainbow-delimiters-depth-2-face-0009">(</span><span class="type">int</span> *<span class="rainbow-delimiters-depth-2-face-0009">)</span> <span class="ccls-sem-function-face-3-0031">malloc</span><span class="rainbow-delimiters-depth-2-face-0009">(</span>8 * <span class="keyword">sizeof</span><span class="rainbow-delimiters-depth-3-face-0010">(</span><span class="type">int</span><span class="rainbow-delimiters-depth-3-face-0010">)</span><span class="rainbow-delimiters-depth-2-face-0009">)</span>;
+  <span class="ccls-sem-type-face-6-0013">Queue</span> <span class="ccls-sem-variable-face-4-0038">queue</span> = <span class="rainbow-delimiters-depth-2-face-0009">{</span>.<span class="ccls-sem-member-face-0006">queue</span> = <span class="ccls-sem-variable-face-3-0033">arr</span><span class="rainbow-delimiters-depth-2-face-0009">}</span>;
+  <span class="ccls-sem-function-face-2">printf</span><span class="rainbow-delimiters-depth-2-face">(</span><span class="string">&quot;BFS result: %d\n&quot;</span>, <span class="ccls-sem-function-face-1">bfs</span><span class="rainbow-delimiters-depth-3-face">(</span>4, 4, <span class="ccls-sem-variable-face-4">vertex_to_edge_string_offset</span>, <span class="ccls-sem-variable-face-3">vertex_data</span>, <span class="ccls-sem-variable-face-1">edge_strings</span>, 0, &amp;<span class="ccls-sem-variable-face-4">queue</span>, <span class="ccls-sem-variable-face-9">visited</span><span class="rainbow-delimiters-depth-3-face">)</span><span class="rainbow-delimiters-depth-2-face">)</span>;
+  <span class="ccls-sem-function-face-3">free</span><span class="rainbow-delimiters-depth-2-face">(</span><span class="ccls-sem-variable-face-3">arr</span><span class="rainbow-delimiters-depth-2-face">)</span>;
+  <span class="keyword">return</span> 0;
+<span class="rainbow-delimiters-depth-1-face-0002">}</span>
+</pre>
+
+ </body>
+</html>

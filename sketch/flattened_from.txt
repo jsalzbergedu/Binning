@@ -1,0 +1,17 @@
+for (int _i = 0; _i < 2 * m; _i++) {
+  if (!EMPTY(queue)){
+    int v;
+    DEQUEUE(v, queue);
+    if (!visited[v]) {
+      printf("visiting, i have %d\n", result);
+      VISIT(v, result);
+      printf("visited %d\n", result);
+      visited[v] = 1;
+      int j = 0;
+      while (edge_strings[vertex_to_edge_string_offset[v] + j] != -1) {
+        ENQUEUE(edge_strings[vertex_to_edge_string_offset[v] + j], queue);
+        j += 1;
+      }
+    }
+  }
+}

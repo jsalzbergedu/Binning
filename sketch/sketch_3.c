@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
+#include <string.h>
 /*
  * T_S, T_I, T_B:
  * T_S: The specification requires that a BFS has been run
@@ -13,6 +15,8 @@
 /* TODO: test this with pequin, code up the version that works as a checker (by taking edges in the order in which they're traversed), code up the checker version with pqn, and see how this can be extended w/ binning */
 
 /* TODO: replace all randomly accessed arrays with a big blob of merkle memory; perhaps using macros to make it more cute to access. Then test that in pequin. */
+
+/* TOOD port to pequin, testing each of these little pieces 1 by 1 */
 
 // Array repr:
 // We'll have:
@@ -32,52 +36,85 @@
 
 // The simplest example:
 // size n
-int vertex_to_edge_string_offset[] = {0, 3, 6, 9};
+uint8_t vertex_to_edge_string_offset[] = {0, 3, 6, 9};
 // size n
 int vertex_data[] = {0, 1, 2, 3};
-// size m * 2 + n
-int edge_strings[] = {1, 3, -1, 0, 2, -1, 1, 3, -1, 0, 2, -1};
-int visited[] = {0, 0, 0, 0};
+// size n * (max_outdegree)
+int edge_strings[] = {1, 3, 0, 2, 1, 3, 0, 2};
 
-typedef struct {
-  int *queue;
-  int first_enqueued;
-  int last_enqueued;
-} Queue;
+#define MAX_OUTDEGREE 2
+#define M 4
+#define N 4
 
-#define INITIALIZE_QUEUE(queuename, value) {(queuename)->queue[0] = (value); (queuename)->first_enqueued = 0; (queuename)->last_enqueued = 0;}
-#define VISIT(vertex, state) {state -= vertex_data[(vertex)];}
-#define DEQUEUE(into, queuename) {into = (queuename)->queue[queue->first_enqueued]; (queuename)->first_enqueued += 1;}
-#define ENQUEUE(element, queuename) {(queuename)->queue[++((queuename)->last_enqueued)] = (element);}
-#define EMPTY(queuename) ((queuename)->first_enqueued > (queuename)->last_enqueued)
-#define STATE_PROCESS_QUEUE 0
-#define STATE_ENQUEUE_ADJACENCIES 1
 // Then the bfs will look like the following:
 // (Where queue is at least as long as the vertices)
-int bfs(int n, int m, int *vertex_to_edge_string_offset, int *vertex_data, int *edge_strings, int start_vertex, Queue *queue, int *visited) {
+
+#define STATE_PROCESS_QUEUE 0
+#define STATE_ENQUEUE_ADJACENCIES 1
+#define ramput(i, src) {memcpy((void *) &(memory[(i)]), (void *) (src), sizeof(int));}
+#define ramget(dest, i) {memcpy((void *) (dest), (void *) &(memory[(i)]), sizeof(int));}
+#define VISIT(vertex, state) {ramget(&vertex_data_tmp, QUEUE_SIZE + VISITED_SIZE + ADJACENCIES_SIZE + vertex); state -= vertex_data_tmp;}
+#define ENQUEUE(element) {ramput(last_enqueued, &(element)); last_enqueued += 1;}
+#define DEQUEUE(element) {ramget((element), first_enqueued); first_enqueued += 1;}
+#define GET_VISITED(i, visited) {ramget((visited), (i) + 2 * M);}
+#define SET_VISITED(i) {ramput((i) + 2 * M, &one);}
+#define EMPTY() (first_enqueued > last_enqueued)
+#define QUEUE_SIZE (M * 2)
+#define VISITED_SIZE (N)
+#define ADJACENCIES_SIZE (MAX_OUTDEGREE * N)
+#define VERTEX_DATA_SIZE N
+#define GET_NEIGHBOR(v, j, dest) {ramget(dest, QUEUE_SIZE + VISITED_SIZE + (v * MAX_OUTDEGREE) + j)}
+int bfs(int *vertex_data, int *edge_strings) {
+  // First copy over the edge strings
+  int *memory = calloc(QUEUE_SIZE + VISITED_SIZE + ADJACENCIES_SIZE + VERTEX_DATA_SIZE, sizeof(int));
+  memset(memory, 0, sizeof(int) * (QUEUE_SIZE + VISITED_SIZE + ADJACENCIES_SIZE + VERTEX_DATA_SIZE));
+  for (int i = 0; i < ADJACENCIES_SIZE; i++) {
+    ramput(QUEUE_SIZE + VISITED_SIZE + i, &(edge_strings[i]));
+  }
+
+  for (int i = 0; i < VERTEX_DATA_SIZE; i++) {
+    ramput(QUEUE_SIZE + VISITED_SIZE + ADJACENCIES_SIZE + i, &(vertex_data[i]));
+  }
+
+  int last_enqueued;
+  int first_enqueued;
+  last_enqueued = 0;
+  first_enqueued = 0;
+
   int result = 0;
-  INITIALIZE_QUEUE(queue, start_vertex);
   int state = 0;
-  int v = -1;
+  int v = 0;
   int j = 0;
+  int one = 1;
+  int visited = 0;
+  int neighbor;
+  int vertex_data_tmp;
+
+
+  // Enqueue the start vertex
+  ENQUEUE(v);
   // 2*m iterations (handshake lemma, the degree of each vertex is added to the queue)
   // and two states per iteration (once dequeing, once enqueueing)
-  for (int _i = 0; _i < 4 * m; _i++) {
-    if (state == STATE_PROCESS_QUEUE && !EMPTY(queue)) {
-      DEQUEUE(v, queue);
-      if (!visited[v]) {
+  for (int _i = 0; _i < 4 * M; _i++) {
+    if (state == STATE_PROCESS_QUEUE && !EMPTY()) {
+      // Dequeue
+      DEQUEUE(&v);
+      GET_VISITED(v, &visited);
+      if (!visited) {
+        // Visit
         VISIT(v, result);
-        visited[v] = 1;
+        SET_VISITED(v);
+        // Enqueue neighbors
         j = 0;
         state = STATE_ENQUEUE_ADJACENCIES;
       }
     } else if (state == STATE_ENQUEUE_ADJACENCIES) {
-      if (edge_strings[vertex_to_edge_string_offset[v] + j] != -1) {
-        ENQUEUE(edge_strings[vertex_to_edge_string_offset[v] + j], queue);
-        j += 1;
-      } else {
-        state = STATE_PROCESS_QUEUE;
+      GET_NEIGHBOR(v, j, &neighbor);
+      if (neighbor != 255) {
+        ENQUEUE(neighbor);
       }
+      j += 1;
+      state = (j == MAX_OUTDEGREE) ? STATE_PROCESS_QUEUE : STATE_ENQUEUE_ADJACENCIES;
     }
   }
 
@@ -91,9 +128,6 @@ int bfs(int n, int m, int *vertex_to_edge_string_offset, int *vertex_data, int *
  */
 int main(int argc, char **argv) {
   // int arr[] = {0, 0, 0, 0, 0};
-  int *arr = (int *) malloc(8 * sizeof(int));
-  Queue queue = {.queue = arr};
-  printf("BFS result: %d\n", bfs(4, 4, vertex_to_edge_string_offset, vertex_data, edge_strings, 0, &queue, visited));
-  free(arr);
+  printf("BFS result: %d\n", bfs(vertex_data, edge_strings));
   return 0;
 }

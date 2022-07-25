@@ -12,8 +12,6 @@
 
 /* TODO: test this with pequin, code up the version that works as a checker (by taking edges in the order in which they're traversed), code up the checker version with pqn, and see how this can be extended w/ binning */
 
-/* TODO: replace all randomly accessed arrays with a big blob of merkle memory; perhaps using macros to make it more cute to access. Then test that in pequin. */
-
 // Array repr:
 // We'll have:
 // vertices 0..N
@@ -30,13 +28,11 @@
 // -- we could imagine packaging this as "a compiler optimization", like with bfs, in which case binning is a backend
 // The latter is probably best for **packaging** purposes. The former is obviously asymptotically more optimal, and gives better insights on binning networks themselves
 
-// The simplest example:
-// size n
-int vertex_to_edge_string_offset[] = {0, 3, 6, 9};
 // size n
 int vertex_data[] = {0, 1, 2, 3};
-// size m * 2 + n
-int edge_strings[] = {1, 3, -1, 0, 2, -1, 1, 3, -1, 0, 2, -1};
+
+// size max_outdegree * n
+int edge_strings[] = {1, 3, 0, 2, 0, 2, 1, 3};
 int visited[] = {0, 0, 0, 0};
 
 typedef struct {
@@ -45,6 +41,7 @@ typedef struct {
   int last_enqueued;
 } Queue;
 
+#define MAX_OUTDEGREE 2
 #define INITIALIZE_QUEUE(queuename, value) {(queuename)->queue[0] = (value); (queuename)->first_enqueued = 0; (queuename)->last_enqueued = 0;}
 #define VISIT(vertex, state) {state -= vertex_data[(vertex)];}
 #define DEQUEUE(into, queuename) {into = (queuename)->queue[queue->first_enqueued]; (queuename)->first_enqueued += 1;}
@@ -54,7 +51,7 @@ typedef struct {
 #define STATE_ENQUEUE_ADJACENCIES 1
 // Then the bfs will look like the following:
 // (Where queue is at least as long as the vertices)
-int bfs(int n, int m, int *vertex_to_edge_string_offset, int *vertex_data, int *edge_strings, int start_vertex, Queue *queue, int *visited) {
+int bfs(int n, int m, int *vertex_data, int *edge_strings, int start_vertex, Queue *queue, int *visited) {
   int result = 0;
   INITIALIZE_QUEUE(queue, start_vertex);
   int state = 0;
@@ -72,11 +69,11 @@ int bfs(int n, int m, int *vertex_to_edge_string_offset, int *vertex_data, int *
         state = STATE_ENQUEUE_ADJACENCIES;
       }
     } else if (state == STATE_ENQUEUE_ADJACENCIES) {
-      if (edge_strings[vertex_to_edge_string_offset[v] + j] != -1) {
-        ENQUEUE(edge_strings[vertex_to_edge_string_offset[v] + j], queue);
-        j += 1;
-      } else {
+      if (j == MAX_OUTDEGREE) {
         state = STATE_PROCESS_QUEUE;
+      } else {
+        ENQUEUE(edge_strings[v * MAX_OUTDEGREE + j], queue);
+        j += 1;
       }
     }
   }
@@ -93,7 +90,7 @@ int main(int argc, char **argv) {
   // int arr[] = {0, 0, 0, 0, 0};
   int *arr = (int *) malloc(8 * sizeof(int));
   Queue queue = {.queue = arr};
-  printf("BFS result: %d\n", bfs(4, 4, vertex_to_edge_string_offset, vertex_data, edge_strings, 0, &queue, visited));
+  printf("BFS result: %d\n", bfs(4, 4, vertex_data, edge_strings, 0, &queue, visited));
   free(arr);
   return 0;
 }
