@@ -1,4 +1,5 @@
-This repository exists to colect notes, papers, and ideas for improving the compilation of control flow structures using binning.
+The purpose of this repository is to collect notes, papers, ideas, and code for improving the compilation
+of control flow structures using binning.
 
 Project goals:
 Rewriting iterated conditionals to use binning networks knowing a bound/ratio on the number of times each branch is taken,
