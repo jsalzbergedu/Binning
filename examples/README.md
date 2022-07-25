@@ -12,11 +12,19 @@ git clone https://github.com/pepper-project/pequin.git pequin_experiments
 
 2. Setup pequin according to your own system specifications.
 
-3. Link experiments and run them
+3. Link experiments
 ```
 make # or make all
 ```
 
+4. And run them
+```
+make run
+```
+
+# BFS
+BFS defines a breadth first search with an array-backed queue.
+
 # BFS4
-BFS4 defines a bfs which
+BFS4 defines a bfs which avoids nested if-statements to allow for printing.
 
